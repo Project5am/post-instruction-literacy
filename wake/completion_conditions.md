@@ -1,0 +1,2 @@
+Completion Conditions
+The notation is complete when nothing in it requires you to understand, a second reader could locate the same residues in the work itself, and nothing has been unified. It is incomplete when it reads as a statement about you, a theory of the work, r resolves into coherence. Completion is not resolution. It is the point at which the practitioner stopped adding. The Wake remains open. The form ends when interference ends. Not when meaning appears.
