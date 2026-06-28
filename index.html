@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Book | Jason Kofi-Haye</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2eb;
+    --dim: #6b6459;
+    --rule: #c8c0b0;
+    --signal: #1a1a1a;
+    --accent: #8b4a2a;
+    --archive-bg: #edeae2;
+    --def-bg: #f5f2eb;
+    --interp-bg: #f0ece3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: var(--ink); }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  /* ── REGISTER SYSTEM ── */
+  .register-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    padding: 16px 20px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .register-key {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .register-swatch {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .reg {
+    margin: 12px 0;
+    padding: 14px 18px;
+    border-left: 3px solid transparent;
+  }
+
+  .reg-archive {
+    background: var(--archive-bg);
+    border-left-color: #7a7060;
+  }
+
+  .reg-def {
+    background: var(--def-bg);
+    border-left-color: var(--accent);
+  }
+
+  .reg-interp {
+    background: var(--interp-bg);
+    border-left-color: #9ba88d;
+    font-style: italic;
+  }
+
+  .reg-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .reg p, .reg-text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--signal);
+    font-style: normal;
+  }
+
+  .reg-interp .reg-text {
+    font-style: italic;
+    color: #4a4540;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 48px 48px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .cover-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .cover-title {
+    font-size: clamp(48px, 8vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: auto 0;
+    padding: 80px 0;
+  }
+
+  .cover-title em { font-style: italic; color: var(--accent); }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .cover-meta-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+
+  .cover-meta-item strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  /* ── EMERGENCY NOTE ── */
+  .emergency {
+    padding: 40px 48px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .emergency-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .emergency p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #d4cfc6;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 56px 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .section-title {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .section-title em { font-style: italic; }
+
+  .body-text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--signal);
+    margin-bottom: 20px;
+  }
+
+  .body-text:last-child { margin-bottom: 0; }
+
+  /* ── STAGE PLOT ── */
+  .stage-plot {
+    margin: 32px 0;
+    border: 1px solid var(--rule);
+  }
+
+  .stage-plot-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 120px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stage-plot-row:last-child { border-bottom: none; }
+
+  .stage-plot-row.header { background: var(--ink); color: var(--paper); }
+
+  .stage-plot-cell {
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    border-right: 1px solid var(--rule);
+    line-height: 1.6;
+  }
+
+  .stage-plot-row.header .stage-plot-cell {
+    border-right-color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #999;
+    font-size: 9px;
+  }
+
+  .stage-plot-cell:last-child { border-right: none; }
+
+  .layer-name {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ── CUE SHEET ── */
+  .cue-list { margin: 24px 0; }
+
+  .cue-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
+  }
+
+  .cue-item:first-child { border-top: 1px solid var(--rule); }
+
+  .cue-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-right: 20px;
+    line-height: 1.5;
+  }
+
+  .cue-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--signal);
+  }
+
+  .cue-condition {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--dim);
+    margin-top: 6px;
+    display: block;
+  }
+
+  .cue-instruction {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-top: 8px;
+    display: block;
+    padding-top: 8px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cue-instruction::before {
+    content: "At entry → ";
+    color: var(--dim);
+  }
+
+  /* ── WORKED EXAMPLE ── */
+  .worked-example {
+    margin: 36px 0;
+    border: 1px solid var(--rule);
+  }
+
+  .worked-example-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .worked-example-header span { color: var(--accent); }
+
+  .worked-example-body { padding: 24px 20px; }
+
+  .example-step {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+    align-items: start;
+  }
+
+  .example-step:last-child { margin-bottom: 0; }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+
+  .step-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--signal);
+  }
+
+  .step-text strong {
+    font-weight: 500;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 3px;
+    color: var(--dim);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .example-finding {
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: var(--archive-bg);
+    border-left: 3px solid #7a7060;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--signal);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── BLOCKING ── */
+  .blocking-entry {
+    margin-bottom: 28px;
+    padding-left: 20px;
+    border-left: 1px solid var(--accent);
+  }
+
+  .blocking-output {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  /* ── AXIOM SPINE ── */
+  .axiom-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
+  }
+
+  .axiom-item:first-child { border-top: 1px solid var(--rule); }
+
+  .axiom-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-right: 20px;
+    line-height: 1.5;
+  }
+
+  .axiom-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--signal);
+  }
+
+  /* ── COLOPHON ── */
+  .colophon-section {
+    padding: 56px 48px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .colophon-section .section-tag { color: var(--accent); }
+
+  .colophon-word {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin: 32px 0 8px;
+  }
+
+  .colophon-word em { font-style: italic; }
+
+  .colophon-gloss {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .colophon-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #c8c3bb;
+    margin-bottom: 16px;
+  }
+
+  .pivot-line {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.12em;
+    color: #555;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  blockquote {
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--dim);
+    margin: 28px 0;
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+
+  /* ── END MATTER ── */
+  .end-matter {
+    padding: 40px 48px;
+  }
+
+  .end-matter p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+
+  /* ── ARCHIVE BADGES ── */
+  .ra {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7a7060;
+    background: var(--archive-bg);
+    border: 1px solid #b8b0a0;
+    border-radius: 2px;
+    padding: 1px 5px;
+    vertical-align: middle;
+    margin-left: 4px;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .cover, .section, .emergency, .colophon-section, .end-matter { padding-left: 24px; padding-right: 24px; }
+    .stage-plot-row { grid-template-columns: 100px 1fr; }
+    .stage-plot-row .stage-plot-cell:last-child { display: none; }
+    .cue-item, .axiom-item { grid-template-columns: 1fr; gap: 6px; }
+    .register-legend { gap: 12px; }
+    .cover-meta { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Production Document | Master Copy</div>
+  <div class="cover-title">The<br><em>Prompt</em><br>Book</div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);padding-bottom:60px;">A Reading Instrument</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>Practice</strong>Jason Kofi-Haye<br>Project 5am</div>
+    <div class="cover-meta-item"><strong>Origin</strong>May 2007<br>Peak experience</div>
+    <div class="cover-meta-item"><strong>Framework</strong>Post Instruction Literacy<br>V1.0, March 2026<br>Rev. June 2026</div>
+    <div class="cover-meta-item"><strong>Purpose</strong>Recreate conditions<br>for correct reading</div>
+  </div>
+</div>
+
+<!-- EMERGENCY NOTE -->
+<div class="emergency">
+  <div class="emergency-label">Note: Read Before Proceeding</div>
+  <p>This document operates as a reading instrument. If it appears complete, the reading has closed before the document has.</p>
+  <p style="margin-top:12px;">The distinctions established here are intended to remain valid beyond this document.</p>
+  <p style="margin-top:16px;">It does not interpret the work. It recreates the conditions under which the work can be correctly read. Three kinds of statement appear throughout: archive (what is documented), practice definition (how the layers and instruments operate), and interpretation (what the archive suggests). They are visually distinct. Read them accordingly.</p>
+</div>
+
+<!-- SECTION 1: SOURCE EVENT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">01. Source</div>
+    <div class="section-title">The <em>Origin Event</em></div>
+  </div>
+
+  <div class="register-legend">
+    <div class="register-key"><div class="register-swatch" style="background:#7a7060;"></div>Archive</div>
+    <div class="register-key"><div class="register-swatch" style="background:var(--accent);"></div>Practice Definition</div>
+    <div class="register-key"><div class="register-swatch" style="background:#9ba88d;"></div>Interpretation</div>
+  </div>
+
+  <div class="reg reg-archive">
+    <span class="reg-label">Archive</span>
+    <p class="reg-text">May 2007. A peak experience that preceded the naming of the practice by several years. Project 5am was established in 2007. Its name draws from Allen Ginsberg's poem "Five A.M." The 2014 studio concept map (produced during the Flux Without Pause graduation period) shows PIL's diagnostic principles operating as conscious studio positions before PIL was named. Jason Kofi-Haye used the name "Quixote" before Project 5am was established.</p>
+  </div>
+
+  <div class="reg reg-def">
+    <span class="reg-label">Practice Definition</span>
+    <p class="reg-text">Project 5am operates as the field layer of the practice. Its conceptual anchor is Rumi's field poem: "Out beyond ideas of wrongdoing and rightdoing, there is a field. I'll meet you there." That field is the post-instruction space: the condition PIL names and works within.</p>
+  </div>
+
+  <div class="reg reg-interp">
+    <span class="reg-label">Interpretation</span>
+    <p class="reg-text">The 2007 event functions in the archive less as a beginning than as a disclosure point. The distinction matters: a beginning produces what follows it; a disclosure reveals what was already present. A beginning can be identified at the moment it occurs. A disclosure is only confirmed by subsequent evidence: this is why the 2014 concept map is load-bearing here. It documents a formation operating seven years after the event and twelve years before the framework, without the benefit of either. The outputs that follow 2007 are best understood as deposits from that event rather than developments beyond it, though this reading remains interpretive and should be tested against the archive rather than assumed from it.</p>
+  </div>
+
+  <div class="reg reg-archive" style="margin-top: 24px;">
+    <span class="reg-label">Archive: Name History</span>
+    <p class="reg-text">"Quixote" was the identity carried before Project 5am. The shift is documented in the archive as a the naming of the condition rather than a rebranding. PIL was retrospectively identified as the framework that diagnosed what "Quixote" was living through. The "No to £650" petition (509 signatories) <span class="ra">RA-06</span> is documented as the earliest transmission event in which the structural logic of the practice became visible to others without being labelled by Jason. The 2014 studio concept map <span class="ra">RA-04</span> is primary archive material for this period.</p>
+  </div>
+</div>
+
+<!-- SECTION 2: STAGE PLOT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">02. Map</div>
+    <div class="section-title">The <em>Stage Plot</em></div>
+  </div>
+
+  <p class="body-text">Three layers, each established independently, each documented as operating before the system was mapped. The layers are not a hierarchy. They are simultaneous registers.</p>
+
+  <p class="body-text">What follows is not a chronology but an operating map.</p>
+
+  <div class="stage-plot">
+    <div class="stage-plot-row header">
+      <div class="stage-plot-cell">Layer</div>
+      <div class="stage-plot-cell">Function</div>
+      <div class="stage-plot-cell">PIL Axes</div>
+    </div>
+    <div class="stage-plot-row">
+      <div class="stage-plot-cell"><span class="layer-name">Project 5am</span>Est. 2007<br>Field layer</div>
+      <div class="stage-plot-cell">Thing in context. The originating practice. Holds the source event and all outputs in relation to it. The field where the work exists before it is categorised.</div>
+      <div class="stage-plot-cell">Resonance<br>Alignment</div>
+    </div>
+    <div class="stage-plot-row">
+      <div class="stage-plot-cell"><span class="layer-name">Flux Without Pause</span>Est. 2014<br>Wave layer</div>
+      <div class="stage-plot-cell">Thing changing over time. Tracks movement, drift, and deformation across the developmental arc of the practice. The 2014 fine art graduation period and its institutional incident are primary archive material for this layer.</div>
+      <div class="stage-plot-cell">Drift detection</div>
+    </div>
+    <div class="stage-plot-row">
+      <div class="stage-plot-cell"><span class="layer-name">Surf/ace 間</span>Est. 2018<br>Particle layer</div>
+      <div class="stage-plot-cell">Thing in itself. Each output examined at its own boundary. 間 (ma): the Japanese concept of interval, negative space, the structurally significant gap. Produces schema fit and structural integrity readings.</div>
+      <div class="stage-plot-cell">Schema fit<br>Structural integrity</div>
+    </div>
+  </div>
+
+  <div style="margin: 28px 0 0; display:flex; flex-direction:column; align-items:center;">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;display:block;" aria-label="Radial diagram showing three layers in simultaneous relation to PIL at the centre">
+      <!-- Outer ring (faint) -->
+      <circle cx="150" cy="150" r="110" fill="none" stroke="#e0dcd4" stroke-width="1"/>
+      <!-- PIL centre -->
+      <circle cx="150" cy="150" r="18" fill="#0e0e0e"/>
+      <text x="150" y="147" font-family="'DM Mono',monospace" font-size="10" font-weight="500" fill="#f5f2eb" text-anchor="middle" dominant-baseline="middle">PIL</text>
+      <text x="150" y="160" font-family="'DM Mono',monospace" font-size="7" fill="#8b4a2a" text-anchor="middle">simultaneous</text>
+      <!-- Spoke 1: Project 5am / top -->
+      <line x1="150" y1="132" x2="150" y2="52" stroke="#8b4a2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+      <circle cx="150" cy="46" r="5" fill="#8b4a2a"/>
+      <text x="150" y="30" font-family="'DM Mono',monospace" font-size="9" fill="#8b4a2a" text-anchor="middle">Project 5am</text>
+      <text x="150" y="20" font-family="'DM Mono',monospace" font-size="8" fill="#6b6459" text-anchor="middle">field · 2007</text>
+      <!-- Spoke 2: Flux Without Pause / bottom left -->
+      <line x1="134" y1="162" x2="58" y2="238" stroke="#8b4a2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+      <circle cx="52" cy="244" r="5" fill="#8b4a2a"/>
+      <text x="38" y="266" font-family="'DM Mono',monospace" font-size="9" fill="#8b4a2a" text-anchor="middle">Flux Without</text>
+      <text x="38" y="278" font-family="'DM Mono',monospace" font-size="9" fill="#8b4a2a" text-anchor="middle">Pause</text>
+      <text x="38" y="290" font-family="'DM Mono',monospace" font-size="8" fill="#6b6459" text-anchor="middle">wave · 2014</text>
+      <!-- Spoke 3: Surf/ace ma / bottom right -->
+      <line x1="166" y1="162" x2="242" y2="238" stroke="#8b4a2a" stroke-width="1" str
